@@ -59,6 +59,7 @@ def Count_trade(trades)
 	for trade in trades
 		if trade["order_type"] == "buy" then
 			buy += 1 
+			# trade["rate"].to_s + " : " +  trade["amount"].to_s
 		elsif trade["order_type"] == "sell" then
 			sell += 1
 		end
@@ -70,12 +71,40 @@ end
 
 #  - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+def Get_valid_volume(order_books_resp)
+
+	ask_volume = 0.to_f
+	bid_volume = 0.to_f
+
+	for ask in order_books_resp["asks"]
+		if ask_volume < ask[1].to_f then
+			ask_volume = ask[1].to_f
+			ask_price = ask[0].to_f
+			p ask_volume.to_s + " : " + ask_price.to_s
+		end
+	end
+
+	for bid in order_books_resp["bids"]
+		if bid_volume < bid[1].to_f then
+			bid_volume = bid[1].to_f
+			bid_price = bid[0].to_f
+			p bid_volume.to_s + " : " + bid_price.to_s			
+		end
+	end	
+
+	return {"ask_price"=> ask_price, "ask_volume"=> ask_volume, "bid_price"=> bid_price, "bid_volume"=> bid_volume}
+
+end
+
+#  - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # ticker_resp = Public_api("/api/ticker")
-# order_books_resp = Public_api("/api/order_books")
-trades_resp = Public_api("/api/trades")
+order_books_resp = Public_api("/api/order_books")
+# trades_resp = Public_api("/api/trades")
 
-trades_count = Count_trade(trades_resp)
-# hash = trades_count.merge(ticker_resp)
+# trades_count = Count_trade(trades_resp)
 
-p trades_resp
-p trades_count
+# p trades_resp
+# p trades_count
+valid_volume = Get_valid_volume(order_books_resp)
+p valid_volume
