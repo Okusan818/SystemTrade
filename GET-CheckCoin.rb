@@ -1,12 +1,11 @@
 # -*- coding="utf-8 -*-
-require 'bundler/setup'
-Bundler.require
-require 'yaml'
+# require 'bundler/setup'
+# Bundler.require
+# require 'yaml'
 require 'net/http'
 # require 'uri'
-require 'csv'
+# require 'csv'
 require 'JSON'
-
 
 
 #  - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -76,6 +75,7 @@ end
 trades_resp = Public_api("/api/trades")
 
 trades_count = Count_trade(trades_resp)
-hash = trades_count.merge(ticker_resp)
+# hash = trades_count.merge(ticker_resp)
 
 p trades_resp
+p trades_count
