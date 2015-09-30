@@ -4,9 +4,9 @@
 # require 'yaml'
 require 'net/http'
 # require 'uri'
-# require 'csv'
 require 'JSON'
-
+require 'mysql2'
+require 'date'
 
 #  - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -97,6 +97,23 @@ def Get_valid_volume(order_books_resp)
 end
 
 #  - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+client = Mysql2::Client.new(:host => ENV["DB_HOST"], :user => ENV["DB_USER"], :port => ENV["DB_PORT"], :password => ENV["DB_PASSWORD"])
+query = %q{select user, host from test.languages}
+results = client.query(query)
+results.each do |row|
+  puts "--------------------"
+  row.each do |key, value|
+    puts "#{key} => #{value}"
+  end
+end
+
+#  - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+
+
+date=Time.now.strftime("%Y%m%d_%H:%M:%S").to_s
 
 # ticker_resp = Public_api("/api/ticker")
 order_books_resp = Public_api("/api/order_books")

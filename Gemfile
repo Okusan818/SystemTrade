@@ -13,6 +13,5 @@ gem 'json'
 # gem 'jquery-rails'
 # gem 'activerecord-postgresql-adapter'
 # gem 'uglifier'
-
-
-
+# gem 'mysql'
+gem 'mysql2', '0.4.1'
